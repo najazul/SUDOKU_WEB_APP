@@ -1,6 +1,11 @@
 import SudokuGrid from './sudoku_grid/sudokuGrid'
 import './App.css'
+import UndoButton from "./undo_button/UndoButton";
+
 function App() {
+  const handleUndo = () => {
+    console.log("Undo action triggered!");
+  };
 
   return (
     <>
@@ -9,7 +14,12 @@ function App() {
     </div>
     <div className = "Second">
       <SudokuGrid />
-      Pause Here Undo Here NumPad Here
+      <div className="controls">
+      <UndoButton onUndo={handleUndo} />
+      </div>
+      Erase Here
+      Pause Here
+      NumPad Here
     </div>
     </>
   )

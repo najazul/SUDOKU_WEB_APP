@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import UndoButton from "../undo_button/UndoButton";
 import "./sudokuGrid.css";
 
 const SudokuGrid: React.FC = () => {
@@ -9,6 +10,7 @@ const SudokuGrid: React.FC = () => {
   
   // Track the focused cell
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
+  const [history, setHistory] = useState<string[][][]>([]);
 
   const handleInputChange = (
     row: number,
@@ -17,6 +19,7 @@ const SudokuGrid: React.FC = () => {
   ) => {
     const newValue = value.slice(-1);
     if (newValue === "" || /^[1-9]$/.test(newValue)) {
+      setHistory((prevHistory) => [...prevHistory, grid.map((r) => [...r])]);
       setGrid((prevGrid) =>
         prevGrid.map((r, rowIndex) =>
           r.map((cell, colIndex) =>
@@ -24,6 +27,14 @@ const SudokuGrid: React.FC = () => {
           )
         )
       );
+    }
+  };
+
+  const handleUndo = () => {
+    if (history.length > 0) {
+      const lastState = history[history.length - 1];
+      setGrid(lastState);
+      setHistory(history.slice(0, -1));
     }
   };
 
@@ -78,6 +89,7 @@ const SudokuGrid: React.FC = () => {
           })}
         </div>
       ))}
+      <UndoButton onUndo={handleUndo} />
     </div>
   );
 };
