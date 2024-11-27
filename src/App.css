@@ -1,17 +1,46 @@
+body {
+  background-color: #f0f0f0; 
+}
+
 .Second{
-    Display: flex;
+    display: flex;
 } 
 
 .button-container {
   display: flex;
   flex-direction: column; 
+  justify-content: center;
   align-items: center;
 }
 
 .button-caption {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
   margin-top: 8px;
   font-size: 14px;
   color: #344861;
-  text-align: center;
+  text-align: justify;
   justify-content: center;
 }
+
+.control-and-numpad {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.numpad-container {
+  display: flex;
+  justify-content: center;
+}
+

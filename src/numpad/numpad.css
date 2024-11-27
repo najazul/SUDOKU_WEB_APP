@@ -1,0 +1,30 @@
+.numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 80px); /* 3 columns */
+    gap: 10px; /* Space between buttons */
+    justify-content: center; /* Center the numpad */
+  }
+  
+  .numpad-button {
+    font-family: 'Courier New', monospace;
+    width: 80px;
+    height: 60px;
+    font-size: 40px;
+    text-align: center;
+    background-color: #344861;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .numpad-button:hover {
+    background-color: #496682;
+    transform: scale(1.1);
+  }
+
+  .numpad-button:active {
+    background-color: #293b4c;
+    transform: scale(1.1);
+  }
