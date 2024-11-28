@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import fetchSudokuGrid from '../sudoku_API/sudoku_API';
 import "./sudokuGrid.css";
 
 const SudokuGrid: React.FC = () => {
-  // Initialize a 9x9 grid with empty strings
-  const [grid, setGrid] = useState(
-    Array.from({ length: 9 }, () => Array(9).fill(""))
-  );
+  // Initialize grid state as empty, will be updated once the API data is fetched
+  const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill("")));
   
   // Track the focused cell
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
+
+  // Fetch the Sudoku grid from API on mount
+  useEffect(() => {
+    const fetchGrid = async () => {
+      const fetchedGrid = await fetchSudokuGrid();  // Call the API to fetch the grid
+      setGrid(fetchedGrid);  // Update the grid state with the fetched data
+    };
+
+    fetchGrid();  // Trigger the API call when the component mounts
+  }, []);  // Empty dependency array ensures this runs only once
 
   const handleInputChange = (
     row: number,
@@ -42,6 +51,10 @@ const SudokuGrid: React.FC = () => {
     return subgridRow * 3 + subgridCol;
   };
 
+  const preventTextDragging = (e: React.DragEvent<HTMLInputElement>) => {
+    e.preventDefault(); // Prevent text dragging
+  };
+
   return (
     <div className="sudoku-grid">
       {grid.map((row, rowIndex) => (
@@ -63,7 +76,6 @@ const SudokuGrid: React.FC = () => {
 
             return (
               <input
-                draggable="false"
                 key={`${rowIndex}-${colIndex}`}
                 type="text"
                 value={value}
@@ -72,6 +84,7 @@ const SudokuGrid: React.FC = () => {
                 }
                 onFocus={() => handleFocus(rowIndex, colIndex)}
                 onBlur={handleBlur}
+                onDragStart={preventTextDragging}
                 className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight}`}
               />
             );
