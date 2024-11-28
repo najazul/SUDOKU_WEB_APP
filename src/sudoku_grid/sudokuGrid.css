@@ -30,6 +30,9 @@ body {
 }
 
 .sudoku-cell {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
   width: 50px;
   height: 50px;
   text-align: center;
@@ -54,4 +57,3 @@ body {
   background-color: #BBDEFB;
   outline: none
 }
-
