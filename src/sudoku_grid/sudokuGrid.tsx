@@ -10,14 +10,14 @@ const SudokuGrid: React.FC = () => {
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
 
   // Fetch the Sudoku grid from API on mount
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchGrid = async () => {
       const fetchedGrid = await fetchSudokuGrid();  // Call the API to fetch the grid
       setGrid(fetchedGrid);  // Update the grid state with the fetched data
     };
 
     fetchGrid();  // Trigger the API call when the component mounts
-  }, []);  // Empty dependency array ensures this runs only once
+  }, []);  // Empty dependency array ensures this runs only once*/
 
   const handleInputChange = (
     row: number,
