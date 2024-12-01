@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import fetchSudokuGrid from '../sudoku_API/sudoku_API';
 import "./sudokuGrid.css";
+import UndoButton from "../undo_button/UndoButton";
+import EraseButton from  "../erase_button/EraseButton";
+import PauseButton from  "../pause_button/PauseButton";
 
 const SudokuGrid: React.FC = () => {
   // Initialize grid state as empty, will be updated once the API data is fetched
@@ -19,6 +22,8 @@ const SudokuGrid: React.FC = () => {
     fetchGrid();  // Trigger the API call when the component mounts
   }, []);  // Empty dependency array ensures this runs only once*/
 
+  const [history, setHistory] = useState<string[][][]>([]);
+
   const handleInputChange = (
     row: number,
     col: number,
@@ -26,6 +31,7 @@ const SudokuGrid: React.FC = () => {
   ) => {
     const newValue = value.slice(-1);
     if (newValue === "" || /^[1-9]$/.test(newValue)) {
+      setHistory((prevHistory) => [...prevHistory, grid.map((r) => [...r])]);
       setGrid((prevGrid) =>
         prevGrid.map((r, rowIndex) =>
           r.map((cell, colIndex) =>
@@ -33,6 +39,14 @@ const SudokuGrid: React.FC = () => {
           )
         )
       );
+    }
+  };
+
+  const handleUndo = () => {
+    if (history.length > 0) {
+      const lastState = history[history.length - 1];
+      setGrid(lastState);
+      setHistory(history.slice(0, -1));
     }
   };
 
@@ -51,47 +65,46 @@ const SudokuGrid: React.FC = () => {
     return subgridRow * 3 + subgridCol;
   };
 
-  const preventTextDragging = (e: React.DragEvent<HTMLInputElement>) => {
-    e.preventDefault(); // Prevent text dragging
-  };
-
   return (
-    <div className="sudoku-grid">
-      {grid.map((row, rowIndex) => (
-        <div className="sudoku-row" key={rowIndex}>
-          {row.map((value, colIndex) => {
-            // Determine if this cell belongs to the selected row, column, or subgrid
-            const isRowSelected = focusedCell?.row === rowIndex;
-            const isColSelected = focusedCell?.col === colIndex;
-            const isSubgridSelected = focusedCell
-              ? getSubgridIndex(focusedCell.row, focusedCell.col) === getSubgridIndex(rowIndex, colIndex)
-              : false;
+    <>
+      <div className="sudoku-grid">
+        {grid.map((row, rowIndex) => (
+          <div className="sudoku-row" key={rowIndex}>
+            {row.map((value, colIndex) => {
+              // Determine if this cell belongs to the selected row, column, or subgrid
+              const isRowSelected = focusedCell?.row === rowIndex;
+              const isColSelected = focusedCell?.col === colIndex;
+              const isSubgridSelected = focusedCell
+                ? getSubgridIndex(focusedCell.row, focusedCell.col) === getSubgridIndex(rowIndex, colIndex)
+                : false;
 
-            const topBorder = rowIndex % 3 === 0 && rowIndex !== 0 ? "top-border" : "";
-            const leftBorder = colIndex % 3 === 0 && colIndex !== 0 ? "left-border" : "";
-            const isFocused = focusedCell?.row === rowIndex && focusedCell?.col === colIndex ? "focused" : "";
-            const rowHighlight = isRowSelected ? "highlight-row" : "";
-            const colHighlight = isColSelected ? "highlight-col" : "";
-            const subgridHighlight = isSubgridSelected ? "highlight-subgrid" : "";
+              const topBorder = rowIndex % 3 === 0 && rowIndex !== 0 ? "top-border" : "";
+              const leftBorder = colIndex % 3 === 0 && colIndex !== 0 ? "left-border" : "";
+              const isFocused = focusedCell?.row === rowIndex && focusedCell?.col === colIndex ? "focused" : "";
+              const rowHighlight = isRowSelected ? "highlight-row" : "";
+              const colHighlight = isColSelected ? "highlight-col" : "";
+              const subgridHighlight = isSubgridSelected ? "highlight-subgrid" : "";
 
-            return (
-              <input
-                key={`${rowIndex}-${colIndex}`}
-                type="text"
-                value={value}
-                onChange={(e) =>
-                  handleInputChange(rowIndex, colIndex, e.target.value)
-                }
-                onFocus={() => handleFocus(rowIndex, colIndex)}
-                onBlur={handleBlur}
-                onDragStart={preventTextDragging}
-                className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight}`}
-              />
-            );
-          })}
-        </div>
-      ))}
-    </div>
+              return (
+                <input
+                  draggable="false"
+                  key={`${rowIndex}-${colIndex}`}
+                  type="text"
+                  value={value}
+                  onChange={(e) =>
+                    handleInputChange(rowIndex, colIndex, e.target.value)
+                  }
+                  onFocus={() => handleFocus(rowIndex, colIndex)}
+                  onBlur={handleBlur}
+                  className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight}`}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
+      <UndoButton onUndo={handleUndo} />
+    </>
   );
 };
 

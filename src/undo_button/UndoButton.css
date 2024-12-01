@@ -1,0 +1,26 @@
+.undo-btn {
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 35px;
+    background: linear-gradient(45deg, #344861, #496682);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .undo-btn:hover {
+    background-color: #496682;
+    transform: scale(1.05); 
+  }
+
+  .undo-button:active {
+    transform: scale(0.95);
+  }
+  
+  

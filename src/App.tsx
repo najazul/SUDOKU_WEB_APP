@@ -10,7 +10,6 @@ function App() {
     </div>
     <div className = "Second">
       <SudokuGrid />
-      Pause Here Undo Here NumPad Here
     </div>
     </>
   )

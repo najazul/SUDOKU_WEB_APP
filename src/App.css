@@ -1,3 +1,17 @@
 .Second{
     Display: flex;
+} 
+
+.ctlrbuttonns {
+  display: flex;
 }
+
+.button-caption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #344861;
+  text-align: center;
+  justify-content: center;
+}
+
+
