@@ -5,24 +5,44 @@ import UndoButton from "../undo_button/UndoButton";
 import EraseButton from  "../erase_button/EraseButton";
 import PauseButton from  "../pause_button/PauseButton";
 
-const SudokuGrid: React.FC = () => {
+interface SudokuGridProps {
+  level:number;
+}
+
+const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
   const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill("")));
   
   // Track the focused cell
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
 
+  // Store indices of pre-filled cells from API
+  const [prefilledCells, setPrefilledCells] = useState<{ row: number; col: number }[]>([]);
+  
+  //Store grid history
+  const [history, setHistory] = useState<string[][][]>([]);
+
   // Fetch the Sudoku grid from API on mount
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchGrid = async () => {
-      const fetchedGrid = await fetchSudokuGrid();  // Call the API to fetch the grid
+      const fetchedGrid = await fetchSudokuGrid(level);  // Call the API to fetch the grid
       setGrid(fetchedGrid);  // Update the grid state with the fetched data
+      setHistory([]); //Update the grid history to be emppty with every API call
+
+      // Find all prefilled cells and store their positions
+      const prefilled = [];
+      for (let row = 0; row < fetchedGrid.length; row++) {
+        for (let col = 0; col < fetchedGrid[row].length; col++) {
+          if (fetchedGrid[row][col] !== "") { 
+            prefilled.push({ row, col });
+          }
+        }
+      }
+      setPrefilledCells(prefilled);
     };
 
     fetchGrid();  // Trigger the API call when the component mounts
-  }, []);  // Empty dependency array ensures this runs only once*/
-
-  const [history, setHistory] = useState<string[][][]>([]);
+  }, [level]);  // Empty dependency array ensures this runs only once
 
   const handleInputChange = (
     row: number,
@@ -77,14 +97,15 @@ const SudokuGrid: React.FC = () => {
               const isSubgridSelected = focusedCell
                 ? getSubgridIndex(focusedCell.row, focusedCell.col) === getSubgridIndex(rowIndex, colIndex)
                 : false;
-
+              
               const topBorder = rowIndex % 3 === 0 && rowIndex !== 0 ? "top-border" : "";
               const leftBorder = colIndex % 3 === 0 && colIndex !== 0 ? "left-border" : "";
               const isFocused = focusedCell?.row === rowIndex && focusedCell?.col === colIndex ? "focused" : "";
               const rowHighlight = isRowSelected ? "highlight-row" : "";
               const colHighlight = isColSelected ? "highlight-col" : "";
               const subgridHighlight = isSubgridSelected ? "highlight-subgrid" : "";
-
+              const isReadOnly = prefilledCells.some(cell => cell.row === rowIndex && cell.col === colIndex);
+              const Read = isReadOnly ? "read-only" : "";
               return (
                 <input
                   draggable="false"
@@ -94,15 +115,18 @@ const SudokuGrid: React.FC = () => {
                   onChange={(e) =>
                     handleInputChange(rowIndex, colIndex, e.target.value)
                   }
+                  readOnly={isReadOnly}
                   onFocus={() => handleFocus(rowIndex, colIndex)}
                   onBlur={handleBlur}
-                  className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight}`}
+                  className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight} ${Read}`}
                 />
               );
             })}
           </div>
         ))}
       </div>
+      {/*<EraseButton onErase={hadleErase} />
+      <PauseButton onPause={handlePuase} />*/}
       <UndoButton onUndo={handleUndo} />
     </>
   );
