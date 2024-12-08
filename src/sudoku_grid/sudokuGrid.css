@@ -1,0 +1,57 @@
+.sudoku-grid {
+  display: grid;
+  grid-template-rows: repeat(9, auto);
+  margin: auto;
+  max-width: fit-content;
+  border: 3px solid #344861;
+  background-color: #FFFFFF;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #cdced1;
+}
+
+.sudoku-row {
+  display: grid;
+  grid-template-columns: repeat(9, auto);
+}
+
+.sudoku-cell.top-border {
+  border-top: 3px solid #344861;
+}
+
+.sudoku-cell.left-border {
+  border-left: 3px solid #344861;
+}
+
+.sudoku-cell {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.sudoku-cell.highlight-row {
+  background-color: #E2EBF3;
+}
+
+.sudoku-cell.highlight-col {
+  background-color: #E2EBF3;
+}
+
+.sudoku-cell.highlight-subgrid {
+  background-color: #E2EBF3;
+}
+
+.sudoku-cell:focus {
+  background-color: #BBDEFB;
+  outline: none
+}
+
