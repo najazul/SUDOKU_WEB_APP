@@ -4,12 +4,14 @@ import "./sudokuGrid.css";
 import UndoButton from "../undo_button/UndoButton";
 import EraseButton from  "../erase_button/EraseButton";
 import PauseButton from  "../pause_button/PauseButton";
+import NewGameButton from "../NewGameButton/newgame";
 
-interface SudokuGridProps {
-  level:number;
-}
+  interface SudokuGridProps {
+    level:number;
+    retriger:number;
+  }
 
-const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
+  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
   const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill("")));
   
@@ -21,6 +23,13 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
   
   //Store grid history
   const [history, setHistory] = useState<string[][][]>([]);
+  const [firsthistory, setfirstHistory] = useState<string[][]>([]);
+  const [tempGrid, setTempGrid] = useState<string[][]>(grid);
+
+  const [newGame, setNewGame] = useState<number>(0);
+  const handleNewGame = () => {
+    setNewGame(newGame + 1);
+  };
 
   // Fetch the Sudoku grid from API on mount
   useEffect(() => {
@@ -28,7 +37,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
       const fetchedGrid = await fetchSudokuGrid(level);  // Call the API to fetch the grid
       setGrid(fetchedGrid);  // Update the grid state with the fetched data
       setHistory([]); //Update the grid history to be emppty with every API call
-
+      setfirstHistory(fetchedGrid);
+      setTempGrid(fetchedGrid);
       // Find all prefilled cells and store their positions
       const prefilled = [];
       for (let row = 0; row < fetchedGrid.length; row++) {
@@ -42,8 +52,8 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
     };
 
     fetchGrid();  // Trigger the API call when the component mounts
-  }, [level]);  // Empty dependency array ensures this runs only once
-
+  }, [level, newGame, retriger]);  // Empty dependency array ensures this runs only once
+  
   const handleInputChange = (
     row: number,
     col: number,
@@ -59,7 +69,19 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
           )
         )
       );
+      setTempGrid((prevGrid) =>
+        prevGrid.map((r, rowIndex) =>
+          r.map((cell, colIndex) =>
+            rowIndex === row && colIndex === col ? newValue : cell
+          )
+        )
+      );
     }
+  };
+
+  const handleErase = () => {
+    const lastState = firsthistory;
+    setGrid(lastState);
   };
 
   const handleUndo = () => {
@@ -68,6 +90,19 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
       setGrid(lastState);
       setHistory(history.slice(0, -1));
     }
+  };
+
+  const [pause, setPause] = useState(false);
+  const handlePause = () => {
+    setPause(!pause);
+    console.log(pause);
+    console.log(tempGrid);
+    pause ? setGrid(tempGrid) : setGrid(Array.from({ length: 9 }, () => Array(9).fill("")));
+  };
+
+  const handllePlay = () => {
+    setPause(false);
+    setGrid(tempGrid);
   };
 
   const handleFocus = (row: number, col: number) => {
@@ -88,6 +123,12 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
   return (
     <>
       <div className="sudoku-grid">
+        {pause ? <div className = "Overlay">
+            <button className = "playbtn" onClick = {handlePause}>
+                &#9654;
+            </button>
+        </div>
+        : null}
         {grid.map((row, rowIndex) => (
           <div className="sudoku-row" key={rowIndex}>
             {row.map((value, colIndex) => {
@@ -106,6 +147,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
               const subgridHighlight = isSubgridSelected ? "highlight-subgrid" : "";
               const isReadOnly = prefilledCells.some(cell => cell.row === rowIndex && cell.col === colIndex);
               const Read = isReadOnly ? "read-only" : "";
+
               return (
                 <input
                   draggable="false"
@@ -125,9 +167,16 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({level}) => {
           </div>
         ))}
       </div>
-      {/*<EraseButton onErase={hadleErase} />
-      <PauseButton onPause={handlePuase} />*/}
-      <UndoButton onUndo={handleUndo} />
+      <div className = "Buttons">
+        <div className = "PAUSEUNDOERASE">
+        <EraseButton onErase={handleErase} />
+        <PauseButton onPause={handlePause} />
+        <UndoButton onUndo={handleUndo} />
+        </div>
+        <div className = "NewGame">
+        <NewGameButton onNew ={handleNewGame} />
+        </div>
+      </div>
     </>
   );
 };
