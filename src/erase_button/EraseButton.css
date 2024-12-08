@@ -1,0 +1,29 @@
+.erase-btn {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    line-height: 20px;
+    font-size: 27px;
+    background: linear-gradient(45deg, #344861, #496682);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .erase-btn:hover {
+    background-color: #496682;
+    transform: scale(1.05); 
+  }
+
+  .erase-button:active {
+    transform: scale(0.95);
+  }
+  
+  
