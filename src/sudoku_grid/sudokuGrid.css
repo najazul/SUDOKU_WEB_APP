@@ -32,7 +32,7 @@ body {
 
 .sudoku-cell.read-only {
   pointer-events: none;     
-  color: rgb(0, 0, 0)
+  color: rgb(0, 0, 0);
 }
 
 .sudoku-row {
@@ -65,12 +65,16 @@ body {
   outline: none;
 }
 
+.sudoku-cell.invalid {
+  color: red;
+}
+
 .PAUSEUNDOERASE{
   display: flex;
 }
 
 .Buttons{
-  display:block
+  display:block;
 }
 
 .Overlay {
