@@ -27,7 +27,7 @@ import "./sudokuGrid.css";
   const [tempGrid, setTempGrid] = useState<string[][]>([]);
   const [newGame, setNewGame] = useState<number>(0);
   const [solvedGrid, setSolvedGrid] = useState<string[][]>([]);
-  const [mistakes, setMistakes] = useState<number>(0);
+  //const [mistakes, setMistakes] = useState<number>(0);
   
   // Fetch the Sudoku grid from API on mount
   useEffect(() => {
