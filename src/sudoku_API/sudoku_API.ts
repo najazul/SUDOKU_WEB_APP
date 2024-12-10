@@ -1,3 +1,5 @@
+import { isValidSudoku } from "../sudoku_solver/sudoku_solver";
+
 const fetchSudokuGrid = async (level:number) => {
   const url = `https://sudoku-board.p.rapidapi.com/new-board?diff=${level}&stype=list&solu=false`;
   const options = {
@@ -16,9 +18,13 @@ const fetchSudokuGrid = async (level:number) => {
     }
     const result = await response.json();
     const sudokuGrid = result.response['unsolved-sudoku'].map((row: number[])=>
-      row.map(cell => (cell === 0 ? "" : cell))
+      row.map(cell => (cell === 0 ? "" : cell.toString()))
     );
-    return sudokuGrid;
+    if(isValidSudoku(sudokuGrid)){
+      return sudokuGrid;
+    }else{
+      return await fetchSudokuGrid(level);
+    }
   } catch (error) {
     console.error('Error fetching Sudoku grid:', error);
     // Return an empty 9x9 grid on error

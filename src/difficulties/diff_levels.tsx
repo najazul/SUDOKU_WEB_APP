@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import "./diff_levels.css";
 
 interface DifficultiesProps {
-  changeLevel: (newLevel: number) => void; // Expected function to change the level
+  changeLevel: (newLevel: number) => void;
 }
 
-const Difficulties: React.FC<DifficultiesProps> = ({changeLevel}) => {  
-    return (
-      <>
-        <div>
-          <button className="Easy" onClick = {() => changeLevel(1)}>
-            Easy
-          </button>   
+const Difficulties: React.FC<DifficultiesProps> = ({ changeLevel }) => {
+  const [selectedLevel, setSelectedLevel] = useState(1);
 
-          <button className="Medium" onClick = {() => changeLevel(2)}>
-            Medium
-          </button> 
+  const handleClick = (level: number) => {
+    setSelectedLevel(level);
+    changeLevel(level);
+  };
 
-          <button className="Hard" onClick = {() => changeLevel(3)}>
-            Hard
-          </button> 
-        </div>
-      </>
-    ); 
+  return (
+    <div className="difficulties-container">
+      <button
+        className={`difficulty-button ${selectedLevel === 1 ? "selected" : ""}`}
+        onClick={() => handleClick(1)}
+      >
+        Easy
+      </button>
+      <button
+        className={`difficulty-button ${selectedLevel === 2 ? "selected" : ""}`}
+        onClick={() => handleClick(2)}
+      >
+        Medium
+      </button>
+      <button
+        className={`difficulty-button ${selectedLevel === 3 ? "selected" : ""}`}
+        onClick={() => handleClick(3)}
+      >
+        Hard
+      </button>
+    </div>
+  );
 };
 
 export default Difficulties;

@@ -1,0 +1,21 @@
+.mistakes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    border: 1px dashed #aaa;
+    margin-left: 300px;
+}
+
+.mistakes-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1c48a79a;
+}
+
+.parent-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}

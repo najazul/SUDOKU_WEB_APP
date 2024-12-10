@@ -1,3 +1,9 @@
+.first{
+    border: 1px dashed #aaa;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
 .Second{
     Display: flex;
 } 

@@ -1,0 +1,18 @@
+.timer-container {
+    border: 1px dashed #aaa;
+    padding: 5px;
+    width: 30px; 
+    text-align: center;
+    margin-left: auto;
+    margin-right: 0px;
+  }
+  
+  .timer {
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    height: 100%;
+  }
+  
