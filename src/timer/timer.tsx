@@ -6,6 +6,8 @@ interface TimerProps {
   solved : boolean;
   pause: boolean;
   FinalTime: (time: number) => void;
+  resetTime: boolean;
+  setResetTime: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const formatTime = (seconds: number) => {
@@ -14,17 +16,18 @@ export const formatTime = (seconds: number) => {
   return `${mins}:${secs < 10 ? `0${secs}` : secs}`;
 };
 
-function Timer({ mistakes, solved, pause, FinalTime }: TimerProps) {
+function Timer({ mistakes, solved, pause, FinalTime, resetTime, setResetTime}: TimerProps) {
   const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
     let interval: number | null = null;
-    if (!solved && !pause && mistakes < 3) {
+    if (!solved && !pause && mistakes < 3 && !resetTime) {
       interval = setInterval(() => {
         setTime((prev) => prev + 1);
       }, 1000);
-    } else if (mistakes === 3) {
-      setTime(prev => (mistakes === 3 ? 0 : prev));
+    } else if (mistakes === 3 || resetTime) {
+      setTime(0);
+      setResetTime(false);
     } else {
       FinalTime(time);
     }
@@ -34,7 +37,7 @@ function Timer({ mistakes, solved, pause, FinalTime }: TimerProps) {
         clearInterval(interval);
       }
     };
-  }, [solved, pause, mistakes]);
+  }, [solved, pause, mistakes, resetTime]);
 
   return (
     <div className="timer-container">

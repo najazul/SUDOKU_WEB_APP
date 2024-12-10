@@ -22,7 +22,8 @@ import { formatTime } from "../timer/timer";
     username: string;
   }
 
-  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, setMistakes, solved, setSolved, finalTime, username}) => {
+  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, 
+    setMistakes, solved, setSolved, finalTime, username}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
   const [grid, setGrid] = useState<string[][]>(Array.from({ length: 9 }, () => Array(9).fill("")));
   
@@ -214,11 +215,11 @@ import { formatTime } from "../timer/timer";
             </button>
         </div>
         : null}
-        {mistakes === 3 ? <div className = "Overlay-2">
-            <button className = "retry" onClick = {handleRetry}>
-              {Texts[0]}
-              Retry?
-            </button>
+        {mistakes === 3 ? <div className="Overlay-2">
+          <div className="content">
+            <p>{Texts[0]}</p>
+            <button className="retry" onClick={handleRetry}>Retry?</button>
+          </div>
         </div>
         : null}
         {solved ? <div className = "Overlay-3">

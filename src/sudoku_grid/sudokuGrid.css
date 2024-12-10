@@ -156,28 +156,47 @@ body {
 }
 
 .Overlay-2 {
-  position: absolute; /* Makes the overlay cover the parent */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-  display: flex; /* Enables flexbox */
-  justify-content: center; /* Horizontally centers the play button */
-  align-items: center; /* Vertically centers the play button */
-  z-index: 10; /* Ensures the overlay is above the grid content */
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column; /* Stacks the text and button vertically */
+  align-items: center; /* Centers text and button horizontally */
+}
+
+.Overlay-2 p {
+  margin-bottom: 16px;
+  color: white; /* Makes text visible on dark background */
+  font-size: 18px;
 }
 
 .retry {
+  display: block;
   background-color: white;
   border: none;
   border-radius: 50%;
   padding: 20px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 11; /* Ensures button is above the overlay */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.retry:hover {
+  background-color: #0056b3;
+  color: white;
 }
 
 .Overlay-3 {

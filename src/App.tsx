@@ -14,6 +14,7 @@ function App() {
   const [solved,setSolved] = useState(false);
   const [finalTime, setfinalTime] = useState<number>(0);
   const [username, setUsername] = useState<string>('');
+  const [resetTime, setResetTime] = useState<boolean>(false);
 
   const changeLevel = (newLevel: number) => {
     if(!pause && mistakes < 3 && !solved){
@@ -29,9 +30,9 @@ function App() {
   return (
     <>
       <div className = "first">
-        <Difficulties changeLevel ={changeLevel} pause = {pause}/>
+        <Difficulties changeLevel ={changeLevel} pause = {pause} setResetTime={setResetTime} mistakes={mistakes} solved ={solved}/>
         <Mistakes mistakes={mistakes}/>
-        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime}  />
+        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime} resetTime = {resetTime} setResetTime={setResetTime} />
         <Username username ={username} setUsername ={setUsername} />
       </div>
       <div className = "Second">
