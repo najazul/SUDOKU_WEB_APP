@@ -5,6 +5,8 @@
   import Timer from "./timer/timer";
   import Mistakes from "./mistakes/mistakes";
   import Username from "./username/username";
+  import Solution from "./solution/solution";
+  import Leaderboard from "./leaderboard/leaderboard";
 
 function App() {
   const [level, setLevel] = useState<number>(1);
@@ -27,24 +29,34 @@ function App() {
 
   return (
     <>
-      <div className = "first">
-        <Difficulties changeLevel ={changeLevel} pause = {pause}/>
-        <Mistakes mistakes={mistakes}/>
-        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime}  />
-        <Username />
+    <div className="main">
+      <div className="left">
+        <Solution />
       </div>
-      <div className = "Second">
-        <SudokuGrid 
-        level = {level} 
-        retriger = {trigger} 
-        pause = {pause}
-        setPause = {setPause}
-        mistakes = {mistakes}
-        setMistakes = {setMistakes}
-        solved = {solved}
-        setSolved = {setSolved}
-        />
+      <div className="center">
+        <div className = "first">
+         <Difficulties changeLevel ={changeLevel} pause = {pause}/>
+         <Mistakes mistakes={mistakes}/>
+         <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime}  />
+         <Username />
+        </div>
+        <div className = "Second">
+         <SudokuGrid 
+         level = {level} 
+         retriger = {trigger} 
+         pause = {pause}
+         setPause = {setPause}
+         mistakes = {mistakes}
+         setMistakes = {setMistakes}
+         solved = {solved}
+         setSolved = {setSolved}
+         />
+        </div>
       </div>
+      <div className="right">
+        <Leaderboard username={username} finalTime={finalTime} />
+      </div>
+    </div>
     </>
   )
 }
