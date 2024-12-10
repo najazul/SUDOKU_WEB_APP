@@ -1,0 +1,25 @@
+.newgame-btn {
+    width: 260px;
+    height: 110px;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    background-color: #344861;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .newgame-btn:hover {
+    background-color: #496682;
+  }
+
+  .newgame-button:active {
+    transform: scale(0.95);
+  }
+  

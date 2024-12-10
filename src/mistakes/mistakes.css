@@ -1,0 +1,21 @@
+.mistakes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    width: 110px;
+}
+
+.mistakes-text {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1c48a79a;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+}
+
+.parent-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
