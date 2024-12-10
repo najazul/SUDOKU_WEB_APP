@@ -1,13 +1,14 @@
-import React from "react"; 
+import React from "react";
+import "./newgame.css"; 
 
 interface NewGameButtonProps {
-  onNew: () => void; 
+  onNewGameClick: () => void; 
 }
 
-const NewGameButton: React.FC<NewGameButtonProps> = ({ onNew }) => {
+const NewGameButton: React.FC<NewGameButtonProps> = ({ onNewGameClick }) => {
   return (
-    <button className="newgame-btn" onClick={onNew}>
-      new game
+    <button className="newgame-btn" onClick={onNewGameClick}>
+      New Game
     </button>
   );    
 };
