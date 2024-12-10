@@ -1,7 +1,10 @@
-import { useState } from "react";
-import SudokuGrid from './sudoku_grid/sudokuGrid'
-import Difficulties from './difficulties/diff_levels'
-import './App.css'
+  import { useState } from "react";
+  import SudokuGrid from './sudoku_grid/sudokuGrid'
+  import Difficulties from './difficulties/diff_levels'
+  import './App.css'
+  import Timer from "./timer/timer";
+  import Mistakes from "./mistakes/mistakes";
+  import Username from "./username/username";
 
 function App() {
   const [level, setLevel] = useState<number>(1);
@@ -21,6 +24,9 @@ function App() {
     <>
       <div className = "first">
         <Difficulties changeLevel ={changeLevel} pause = {pause}/>
+        <Mistakes totalAllowed={mistakes} />
+        <Timer resetTrigger={trigger} />
+        <Username /> {/* Integrated Username component */}
       </div>
       <div className = "Second">
         <SudokuGrid 
@@ -38,4 +44,4 @@ function App() {
   )
 }
 
-export default App
+  export default App

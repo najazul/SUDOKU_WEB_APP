@@ -1,0 +1,16 @@
+.timer-container {
+    padding: 1px;
+    width: 90px; 
+    text-align: center;
+  }
+  
+  .timer {
+    font-size: 15px;
+    color: #333;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    height: 100%;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+  }
+  

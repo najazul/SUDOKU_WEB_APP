@@ -1,0 +1,28 @@
+.username-container {
+    display: flex;
+    align-items: center;
+    width: 265px;
+    margin-left: auto;
+}
+
+.username-label {
+    font-size: 15px;
+    color: #333;
+    margin-right: 8px;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+}
+
+.username-input {
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 50px;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+}
+
+.username-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
