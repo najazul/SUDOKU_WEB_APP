@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './username.css';
 
-function Username() {
-  const [username, setUsername] = useState<string>('');
+interface usernameProps{
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function Username({username, setUsername} : usernameProps) {
 
   const generateRandomName = () => {
     const names = ['Player123', 'SudokuMaster', 'PuzzlePro', 'NumberNinja', 'GridGuru', 'witty', 'NormalNorman', 'LegallyBlonde', ''];
