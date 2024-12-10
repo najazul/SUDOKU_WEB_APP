@@ -4,6 +4,7 @@ import UndoButton from "../undo_button/UndoButton";
 import EraseButton from  "../erase_button/EraseButton";
 import PauseButton from  "../pause_button/PauseButton";
 import NewGameButton from "../NewGameButton/newgame";
+import Numpad from "../numpad/numpad";
 import { solveSudoku } from "../sudoku_solver/sudoku_solver";
 import "./sudokuGrid.css";
 
@@ -131,6 +132,10 @@ import "./sudokuGrid.css";
     setFocusedCell(null);
   };
 
+  const handleNumberClick = (number: string) => {
+    console.log(`Number clicked: ${number}`);
+  };
+
   // Helper function to get the subgrid index based on row and column
   const getSubgridIndex = (row: number, col: number) => {
     const subgridRow = Math.floor(row / 3);
@@ -187,14 +192,31 @@ import "./sudokuGrid.css";
           </div>
         ))}
       </div>
-      <div className = "Buttons">
-        <div className = "PAUSEUNDOERASE">
-        <EraseButton onErase={handleErase} />
-        <PauseButton onPause={handlePause} />
-        <UndoButton onUndo={handleUndo} />
+
+      <div className="control-and-numpad">
+        {/* Controls (Undo, Erase, Pause) */}
+        <div className = "controls">
+          <div className = "button-container">
+            <EraseButton onErase={handleErase} />
+            <div className="button-caption">Erase</div>
+          </div>
+
+          <div className = "button-container">
+            <PauseButton onPause={handlePause} />
+            <div className="button-caption">Pause</div>
+          </div>
+
+          <div className = "button-container">
+            <UndoButton onUndo={handleUndo} />
+            <div className="button-caption">Undo</div>
+          </div>
         </div>
-        <div className = "NewGame">
-        <NewGameButton onNew ={handleNewGame} />
+        {/* numpad */}
+        <div className = "numpad-container">
+            <Numpad onNumberClick={handleNumberClick} />
+        </div>
+        <div className = "new-game-container">
+            <NewGameButton onNewGameClick ={handleNewGame} />
         </div>
       </div>
     </>
