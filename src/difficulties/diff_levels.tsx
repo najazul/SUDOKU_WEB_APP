@@ -6,7 +6,7 @@ interface DifficultiesProps {
   pause: boolean;
 }
 
-const Difficulties: React.FC<DifficultiesProps> = ({ changeLevel }) => {
+const Difficulties: React.FC<DifficultiesProps> = ({ changeLevel, pause }) => {
   const [selectedLevel, setSelectedLevel] = useState(1);
 
   const handleClick = (level: number) => {
@@ -18,19 +18,19 @@ const Difficulties: React.FC<DifficultiesProps> = ({ changeLevel }) => {
     <div className="difficulties-container">
       Difficulty: 
       <button
-        className={`difficulty-button ${selectedLevel === 1 ? "selected" : ""}`}
+        className={`difficulty-button ${selectedLevel === 1 && !pause ? "selected" : ""}`}
         onClick={() => handleClick(1)}
       >
         Easy
       </button>
       <button
-        className={`difficulty-button ${selectedLevel === 2 ? "selected" : ""}`}
+        className={`difficulty-button ${selectedLevel === 2 && !pause ? "selected" : ""}`}
         onClick={() => handleClick(2)}
       >
         Medium
       </button>
       <button
-        className={`difficulty-button ${selectedLevel === 3 ? "selected" : ""}`}
+        className={`difficulty-button ${selectedLevel === 3 && !pause ? "selected" : ""}`}
         onClick={() => handleClick(3)}
       >
         Hard

@@ -12,6 +12,7 @@ function App() {
   const [mistakes, setMistakes] = useState<number>(0);
   const [pause, setPause] = useState(false);
   const [solved,setSolved] = useState(false);
+  const [finalTime, setfinalTime] = useState<number>(0);
 
   const changeLevel = (newLevel: number) => {
     if(!pause && mistakes < 3 && !solved){
@@ -20,13 +21,17 @@ function App() {
     }
   };
 
+  const FinalTime = (time: number) => {
+    setfinalTime(time);
+  }
+
   return (
     <>
       <div className = "first">
         <Difficulties changeLevel ={changeLevel} pause = {pause}/>
-        <Mistakes totalAllowed={mistakes} />
-        <Timer resetTrigger={trigger} />
-        <Username /> {/* Integrated Username component */}
+        <Mistakes mistakes={mistakes}/>
+        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime}  />
+        <Username />
       </div>
       <div className = "Second">
         <SudokuGrid 

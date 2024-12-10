@@ -1,23 +1,15 @@
-import React, { useState } from "react";
 import "./mistakes.css";
 
 interface MistakesProps {
-  totalAllowed: number;
+  mistakes: number;
 }
 
-const Mistakes: React.FC<MistakesProps> = ({ totalAllowed }) => {
-  const [mistakes, setMistakes] = useState<number>(0);
-
-  const incrementMistakes = () => {
-    if (mistakes < totalAllowed) {
-      setMistakes((prev) => prev + 1);
-    }
-  };
+const Mistakes: React.FC<MistakesProps> = ({ mistakes }) => {
 
   return (
     <div className="mistakes-container">
       <p className="mistakes-text">
-        Mistakes: {mistakes} / {totalAllowed}
+        Mistakes: {mistakes} / {3}
       </p>
     </div>
   );

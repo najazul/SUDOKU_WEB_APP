@@ -75,7 +75,7 @@ import "./sudokuGrid.css";
     }
     if (newValue === "" || /^[1-9]$/.test(newValue)) {
       if(newValue != ""){
-        //setMistakes((prev) => (newValue != solvedGrid[row][col] ? prev + 1 : prev));
+        setMistakes((prev) => (newValue != solvedGrid[row][col] ? prev + 1 : prev));
       }
       setHistory((prevHistory) => [...prevHistory, grid.map((r) => [...r])]);
       setGrid((prevGrid) =>
