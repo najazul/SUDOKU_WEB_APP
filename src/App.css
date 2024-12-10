@@ -2,31 +2,27 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    border: 1px solid #4a2db3;
     width: 100vw;
     gap: 1px;
 }
 
 .first{
     display: flex;
-    flex-direction: row;
-    border: 1px dashed #aaa;    
+    flex-direction: row;   
 }
 .Second{
     display: flex;
     width: max-content;
-    border: 1px dashed #aaa;    
 } 
 
 .left {
     width: 270px;
-    height: 500px;
-    border: 1px dashed #c03232
+    height: 490px;
 }
 
 .right {
     width: 270px;
-    height: 500px;
-    border: 1px dashed #a72626
+    height: 490px;
+    border: 5px solid #535353;
 }
 

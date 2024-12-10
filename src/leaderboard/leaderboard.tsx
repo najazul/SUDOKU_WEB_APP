@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./leaderboard.css";
+import bronze from './bronze.png';
+import silver from './silver.png';
+import gold from './gold.png';
 
 interface LeaderboardProps {
   username: string;
@@ -7,36 +10,32 @@ interface LeaderboardProps {
 }
 
 const Leaderboard: React.FC<LeaderboardProps> = ({ username, finalTime }) => {
-  const [entries, setEntries] = useState<{ username: string; time: number }[]>(
-    []
-  );
+  const [entries, setEntries] = useState<{ username: string; time: number }[]>([]);
 
   const addEntry = () => {
-    setEntries([...entries, { username, time: finalTime }]);
-  };
-
-  const resetEntries = () => {
-    setEntries([]);
-  };
-
-  const sortEntries = () => {
-    setEntries([...entries].sort((a, b) => a.time - b.time));
+    const updatedEntries = [...entries, { username, time: finalTime }]
+      .sort((a, b) => a.time - b.time)
+      .slice(0, 10);
+    setEntries(updatedEntries);
   };
 
   return (
     <div className="leaderboard-container">
-      <h2>Leaderboard</h2>
-      <ul>
-        {entries.map((entry, index) => (
-          <li key={index}>
-            {entry.username}: {entry.time}s
-          </li>
-        ))}
-      </ul>
       <div className="leaderboard-buttons">
-        <button onClick={addEntry}>Add Entry</button>
-        <button onClick={resetEntries}>Reset</button>
-        <button onClick={sortEntries}>Sort</button>
+        <img src={bronze} alt="Bronze" onClick={addEntry} />
+        <img src={silver} alt="Silver" onClick={addEntry} />
+        <img src={gold} alt="Gold" onClick={addEntry} />
+      </div>
+      <div className="leaderboard-body">
+        <h2>Top 10</h2>
+        <h3>Difficulty: </h3>
+        <ol>
+          {entries.map((entry, index) => (
+            <li key={index}>
+              {entry.username}: {entry.time}s
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );
