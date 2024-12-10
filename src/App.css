@@ -1,11 +1,12 @@
 .first{
-    border: 1px dashed #aaa;
-    padding: 10px;
     display: flex;
     flex-direction: row;
+    border: 1px dashed #aaa;    
 }
 .Second{
     Display: flex;
+    width: max-content;
+    border: 1px dashed #aaa;    
 } 
 
 

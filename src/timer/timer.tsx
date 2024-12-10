@@ -17,7 +17,7 @@ function Timer({ resetTrigger }: TimerProps) {
   }, []);
 
   useEffect(() => {
-    setTime(0); // Reset the timer whenever resetTrigger changes
+    setTime(0);
   }, [resetTrigger]);
 
   const formatTime = (seconds: number) => {
@@ -28,7 +28,7 @@ function Timer({ resetTrigger }: TimerProps) {
 
   return (
     <div className="timer-container">
-      <div className="timer">{formatTime(time)}</div>
+      <div className="timer">Timer: {formatTime(time)}</div>
     </div>
   );
 }

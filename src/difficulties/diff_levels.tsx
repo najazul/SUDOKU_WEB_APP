@@ -15,6 +15,7 @@ const Difficulties: React.FC<DifficultiesProps> = ({ changeLevel }) => {
 
   return (
     <div className="difficulties-container">
+      Difficulty: 
       <button
         className={`difficulty-button ${selectedLevel === 1 ? "selected" : ""}`}
         onClick={() => handleClick(1)}

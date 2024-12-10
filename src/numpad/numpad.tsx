@@ -14,7 +14,7 @@ const Numpad: React.FC<NumpadProps> = ({ onNumberClick }) => {
         <button
           key={number}
           className="numpad-button"
-          onClick={() => onNumberClick(number)}
+          onClick={() => onNumberClick(number)} 
         >
           {number}
         </button>
