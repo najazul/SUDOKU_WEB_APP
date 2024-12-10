@@ -1,27 +1,25 @@
-.erase-btn {
-    width: 65px;
-    height: 65px;
+.newgame-btn {
+    width: 260px;
+    height: 110px;
     justify-content: center;
     text-align: center;
-    line-height: 20px;
-    font-size: 27px;
+    font-size: 40px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
     background-color: #344861;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #FFFFFF;
     border: none;
-    border-radius: 50%;
+    border-radius: 7px;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
-  .erase-btn:hover {
+  .newgame-btn:hover {
     background-color: #496682;
-    transform: scale(1.05); 
   }
 
-  .erase-btn:active {
-    background-color: #293b4c;
-    transform: scale(1.05);
+  .newgame-button:active {
+    transform: scale(0.95);
   }
-  
   
