@@ -6,19 +6,33 @@ import './App.css'
 function App() {
   const [level, setLevel] = useState<number>(1);
   const [trigger, reTrigger] = useState<number>(1);
+  const [mistakes, setMistakes] = useState<number>(0);
+  const [pause, setPause] = useState(false);
+  const [solved,setSolved] = useState(false);
 
   const changeLevel = (newLevel: number) => {
-    setLevel(newLevel);
-    reTrigger(prev => prev + 1); 
+    if(!pause && mistakes < 3 && !solved){
+      setLevel(newLevel);
+      reTrigger(prev => prev + 1); 
+    }
   };
 
   return (
     <>
       <div className = "first">
-        <Difficulties changeLevel ={changeLevel}/>
+        <Difficulties changeLevel ={changeLevel} pause = {pause}/>
       </div>
       <div className = "Second">
-        <SudokuGrid level = {level} retriger = {trigger} />
+        <SudokuGrid 
+        level = {level} 
+        retriger = {trigger} 
+        pause = {pause}
+        setPause = {setPause}
+        mistakes = {mistakes}
+        setMistakes = {setMistakes}
+        solved = {solved}
+        setSolved = {setSolved}
+        />
       </div>
     </>
   )

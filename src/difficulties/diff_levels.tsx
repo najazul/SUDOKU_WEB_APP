@@ -2,9 +2,11 @@ import React from "react";
 
 interface DifficultiesProps {
   changeLevel: (newLevel: number) => void; // Expected function to change the level
+  pause: boolean;
 }
 
-const Difficulties: React.FC<DifficultiesProps> = ({changeLevel}) => {  
+const Difficulties: React.FC<DifficultiesProps> = ({changeLevel, pause}) => { 
+     
     return (
       <>
         <div>

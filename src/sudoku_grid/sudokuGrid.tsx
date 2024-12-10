@@ -4,17 +4,23 @@ import UndoButton from "../undo_button/UndoButton";
 import EraseButton from  "../erase_button/EraseButton";
 import PauseButton from  "../pause_button/PauseButton";
 import NewGameButton from "../NewGameButton/newgame";
-import { solveSudoku } from "../sudoku_solver/sudoku_solver";
+import { gridsAreEqual, solveSudoku } from "../sudoku_solver/sudoku_solver";
 import "./sudokuGrid.css";
 
   interface SudokuGridProps {
     level:number;
     retriger:number;
+    pause: boolean;
+    setPause: React.Dispatch<React.SetStateAction<boolean>>;
+    mistakes: number;
+    setMistakes: React.Dispatch<React.SetStateAction<number>>;
+    solved: boolean;
+    setSolved: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
-  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger}) => {
+  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, setMistakes, solved, setSolved}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
-  const [grid, setGrid] = useState(Array.from({ length: 9 }, () => Array(9).fill("")));
+  const [grid, setGrid] = useState<string[][]>(Array.from({ length: 9 }, () => Array(9).fill("")));
   
   // Track the focused cell
   const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
@@ -26,23 +32,21 @@ import "./sudokuGrid.css";
   const [firsthistory, setfirstHistory] = useState<string[][]>([]);
   const [tempGrid, setTempGrid] = useState<string[][]>([]);
   const [newGame, setNewGame] = useState<number>(0);
-  const [solvedGrid, setSolvedGrid] = useState<string[][]>([]);
-  const [mistakes, setMistakes] = useState<number>(0);
-  
+  const [solvedGrid, setSolvedGrid] = useState<string[][]>(Array.from({ length: 9 }, () => Array(9).fill("")));
+
   // Fetch the Sudoku grid from API on mount
   useEffect(() => {
-    if(!pause){
+    if(!pause && mistakes < 3 && !solved){
       const fetchGrid = async () => {
         const fetchedGrid = await fetchSudokuGrid(level);  // Call the API to fetch the grid
         setGrid(fetchedGrid);  // Update the grid state with the fetched data
         setHistory([]); //Update the grid history to be emppty with every API call
         setfirstHistory(fetchedGrid);
         setTempGrid(fetchedGrid);
-
         const unSolvedGrid = JSON.parse(JSON.stringify(fetchedGrid));
         const mySolvedGrid = solveSudoku(unSolvedGrid);
         setSolvedGrid(mySolvedGrid);
-
+        console.log(mySolvedGrid);
         // Find all prefilled cells and store their positions
         const prefilled = [];
         for (let row = 0; row < fetchedGrid.length; row++) {
@@ -57,7 +61,7 @@ import "./sudokuGrid.css";
 
       fetchGrid();  // Trigger the API call when the component mounts
     };
-  }, [level, newGame, retriger]);  // Empty dependency array ensures this runs only once
+  }, [level, newGame, retriger]); 
   
   const handleInputChange = (
     row: number,
@@ -69,6 +73,9 @@ import "./sudokuGrid.css";
       newValue = "";
     }
     if (newValue === "" || /^[1-9]$/.test(newValue)) {
+      if(newValue != ""){
+        //setMistakes((prev) => (newValue != solvedGrid[row][col] ? prev + 1 : prev));
+      }
       setHistory((prevHistory) => [...prevHistory, grid.map((r) => [...r])]);
       setGrid((prevGrid) =>
         prevGrid.map((r, rowIndex) =>
@@ -84,18 +91,18 @@ import "./sudokuGrid.css";
           )
         )
       );
-      //put an end here
-    }
+    };
   };
 
   const handleNewGame = () => {
-    if(!pause){
+    if(!pause && mistakes < 3 && !solved){
       setNewGame(newGame + 1);
+      setMistakes(0);
     }
   };
 
   const handleErase = () => {
-    if(!pause){
+    if(!pause && mistakes < 3 && !solved){
       const lastState = firsthistory;
       setGrid(lastState);
       setTempGrid(lastState);
@@ -104,7 +111,7 @@ import "./sudokuGrid.css";
   };
 
   const handleUndo = () => {
-    if(!pause){
+    if(!pause && mistakes < 3 && !solved){
       if (history.length > 0) {
         const lastState = history[history.length - 1];
         setGrid(lastState);
@@ -114,13 +121,19 @@ import "./sudokuGrid.css";
     };
   };
 
-  const [pause, setPause] = useState(false);
   const handlePause = () => {
-    setPause(!pause);
-    console.log(pause);
-    console.log(tempGrid);
-    pause ? setGrid(tempGrid) : setGrid(Array.from({ length: 9 }, () => Array(9).fill("")));
+    if(mistakes < 3 && !solved){
+      setPause(!pause);
+      console.log(pause);
+      console.log(tempGrid);
+      pause ? setGrid(tempGrid) : setGrid(Array.from({ length: 9 }, () => Array(9).fill("")));
+    }
   };
+
+  const handleRetry = () => {
+    setNewGame(newGame + 1);
+    setMistakes(0);
+  }
 
   const handleFocus = (row: number, col: number) => {
     setFocusedCell({ row, col });
@@ -129,6 +142,51 @@ import "./sudokuGrid.css";
   const handleBlur = () => {
     setFocusedCell(null);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!focusedCell) return;
+
+      const { row, col } = focusedCell;
+      let newRow = row;
+      let newCol = col;
+
+      if (event.key === "ArrowRight") {
+        newCol = (col + 1) % 9; // Move to the next cell in the row
+      } else if (event.key === "ArrowLeft") {
+        newCol = (col - 1 + 9) % 9; // Move to the previous cell in the row
+      } else if (event.key === "ArrowUp") {
+        newRow = (row - 1 + 9) % 9; // Move to the cell above
+      } else if (event.key === "ArrowDown") {
+        newRow = (row + 1) % 9; // Move to the cell below
+      }
+
+      // Update focus
+      setFocusedCell({ row: newRow, col: newCol });
+
+      // Focus the new cell
+      const nextCell = document.getElementById(`cell-${newRow}-${newCol}`);
+      nextCell?.focus();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [focusedCell]);
+
+  useEffect(() => {
+    if (gridsAreEqual(grid, solvedGrid) && grid.some(row => row.some(cell => cell != ""))) {
+      setSolved(true);
+    }
+  }, [grid, solvedGrid]);
+
+  const handleNewestGame = () => {
+    setSolved(false);
+    setMistakes(0);
+    setNewGame(newGame + 1);
+  }
 
   // Helper function to get the subgrid index based on row and column
   const getSubgridIndex = (row: number, col: number) => {
@@ -143,6 +201,18 @@ import "./sudokuGrid.css";
         {pause ? <div className = "Overlay">
             <button className = "playbtn" onClick = {handlePause}>
                 &#9654;
+            </button>
+        </div>
+        : null}
+        {mistakes === 3 ? <div className = "Overlay-2">
+            <button className = "retry" onClick = {handleRetry}>
+                retry
+            </button>
+        </div>
+        : null}
+        {solved ? <div className = "Overlay-3">
+            <button className = "yey" onClick = {handleNewestGame}>
+                New Game?
             </button>
         </div>
         : null}
@@ -166,9 +236,10 @@ import "./sudokuGrid.css";
               const Read = isReadOnly ? "read-only" : "";
               const invalid = !isReadOnly && value && value.slice(-1) != solvedGrid[rowIndex][colIndex];
               const validity = invalid ? "invalid" : "";
-              
+
               return (
                 <input
+                  disabled = {mistakes === 3 ? true : false}
                   draggable="false"
                   key={`${rowIndex}-${colIndex}`}
                   type="text"

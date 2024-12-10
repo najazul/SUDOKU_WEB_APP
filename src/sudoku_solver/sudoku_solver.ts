@@ -74,3 +74,14 @@ export const isValidSudoku = (grid: string[][]) => {
     }
     return true;
   };
+
+  export const gridsAreEqual = (grid1: string[][], grid2: string[][]): boolean => {
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid1[row][col] != grid2[row][col]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
