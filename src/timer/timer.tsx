@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Timer.css";
+import "./timer.css";
 
 interface TimerProps {
   mistakes: number;
