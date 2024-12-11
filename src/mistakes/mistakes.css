@@ -1,21 +1,35 @@
 .mistakes-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center; 
+    justify-content: space-evenly; 
     width: 110px;
+    gap: 0px;
 }
 
 .mistakes-text {
+    display: flex; /* Enables Flexbox */
     font-size: 15px;
     font-weight: bold;
-    color: #1c48a79a;
-    font-family: Arial, Arial, Helvetica, sans-serif;
+    color: #ff00009a;
+    font-family: Helvetica;
+    background-color: #ffffff;
+    width: 40px;
+    height: 25px;
+    border-radius: 10px;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
 }
+
 
 .parent-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 8px;
+}
+
+.word{
+    font-size: 15px;
+    font-family: Helvetica;
 }

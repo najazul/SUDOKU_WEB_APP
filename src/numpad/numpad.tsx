@@ -12,6 +12,7 @@ const Numpad: React.FC<NumpadProps> = ({ onNumberClick }) => {
     <div className="numpad">
       {numbers.map((number) => (
         <button
+          onMouseDown={(e) => e.preventDefault()}
           key={number}
           className="numpad-button"
           onClick={() => onNumberClick(number)} 

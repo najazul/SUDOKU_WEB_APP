@@ -7,7 +7,7 @@
   align-items: center;
   gap: 5px;
   box-sizing: border-box;
-  font-family: Arial, Arial, Helvetica, sans-serif;   
+  font-family: Helvetica;   
   font-size: 15px;
 }
 
@@ -20,13 +20,14 @@
   flex: 1 1 auto;
   max-width: max-content; 
   text-align: left;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
   font-family: Arial, Arial, Helvetica, sans-serif;  
+  background-color: #ffffff;
 }
 
 .difficulty-button.selected {
-  color: #007bff;
+  color: #344861;
   font-weight: bold;
   background-color: #c0c0c0;
 }

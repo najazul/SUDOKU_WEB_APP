@@ -1,13 +1,34 @@
+.main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100vw;
+    gap: 1px;
+}
+
 .first{
     display: flex;
     flex-direction: row;
-    border: 1px dashed #aaa;    
+    padding: 0px;
+    height: fit-content;
 }
 .Second{
-    Display: flex;
+    display: flex;
     width: max-content;
-    border: 1px dashed #aaa;    
 } 
 
+.left {
+    width: 270px;
+    height: 500px;
+}
 
+.right {
+    width: 270px;
+    height: 495px;
+    border: 5px solid #535353;
+}
 
+.header{
+    font-family: Helvetica;
+    justify-items: center;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Timer.css";
+import "./timer.css";
 
 interface TimerProps {
   mistakes: number;
@@ -24,7 +24,7 @@ function Timer({ mistakes, solved, pause, FinalTime, resetTime, setResetTime}: T
     if (!solved && !pause && mistakes < 3 && !resetTime) {
       interval = setInterval(() => {
         setTime((prev) => prev + 1);
-      }, 1000);
+      }, 10000);
     } else if (mistakes === 3 || resetTime) {
       setTime(0);
       setResetTime(false);
@@ -41,7 +41,7 @@ function Timer({ mistakes, solved, pause, FinalTime, resetTime, setResetTime}: T
 
   return (
     <div className="timer-container">
-      <div className="timer">Timer: {formatTime(time)}</div>
+      <div className="timer"><p className="text">Timer:</p><p className="time">{formatTime(time)}</p></div>
     </div>
   );
 }

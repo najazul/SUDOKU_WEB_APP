@@ -5,6 +5,8 @@
   import Timer from "./timer/timer";
   import Mistakes from "./mistakes/mistakes";
   import Username from "./username/username";
+  import Solution from "./solution/solution";
+  import Leaderboard from "./leaderboard/leaderboard";
 
 function App() {
   const [level, setLevel] = useState<number>(1);
@@ -15,7 +17,9 @@ function App() {
   const [finalTime, setfinalTime] = useState<number>(0);
   const [username, setUsername] = useState<string>('');
   const [resetTime, setResetTime] = useState<boolean>(false);
-
+  const [FinalLevel, setFinalLevel] = useState<string>("1");
+  const [AddedPlayer, setAddedPlayer] = useState<number>(0);
+  localStorage.clear()
   const changeLevel = (newLevel: number) => {
     if(!pause && mistakes < 3 && !solved){
       setLevel(newLevel);
@@ -29,26 +33,42 @@ function App() {
 
   return (
     <>
-      <div className = "first">
-        <Difficulties changeLevel ={changeLevel} pause = {pause} setResetTime={setResetTime} mistakes={mistakes} solved ={solved}/>
-        <Mistakes mistakes={mistakes}/>
-        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime} resetTime = {resetTime} setResetTime={setResetTime} />
-        <Username username ={username} setUsername ={setUsername} />
+    <div className="header">
+      <h1>SUDOKU ni BAI</h1>
+    </div>
+    <div className="main">
+      <div className="left">
+        <Solution />
       </div>
-      <div className = "Second">
-        <SudokuGrid 
-        level = {level} 
-        retriger = {trigger} 
-        pause = {pause}
-        setPause = {setPause}
-        mistakes = {mistakes}
-        setMistakes = {setMistakes}
-        solved = {solved}
-        setSolved = {setSolved}
-        finalTime = {finalTime}
-        username = {username}
+      <div className="center">
+        <div className = "first">
+         <Difficulties changeLevel ={changeLevel} pause = {pause} setResetTime={setResetTime} mistakes={mistakes} solved ={solved}/>
+         <Mistakes mistakes={mistakes}/>
+         <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime} resetTime = {resetTime} setResetTime={setResetTime} />
+         <Username username ={username} setUsername ={setUsername} />
+        </div>
+        <div className = "Second">
+         <SudokuGrid 
+         level = {level} 
+         retriger = {trigger} 
+         pause = {pause}
+         setPause = {setPause}
+         mistakes = {mistakes}
+         setMistakes = {setMistakes}
+         solved = {solved}
+         setSolved = {setSolved}
+         finalTime = {finalTime}
+         username = {username}
+         setFinalLevel = {setFinalLevel}
+         setAddedPlayer = {setAddedPlayer}
+         setResetTime = {setResetTime}
         />
+        </div>
       </div>
+      <div className="right">
+        <Leaderboard FinalLevel= {FinalLevel} AddedPlayer={AddedPlayer}/>
+      </div>
+    </div>
     </>
   )
 }

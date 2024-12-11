@@ -1,0 +1,31 @@
+.solution {
+    background-color: #f9f9f9;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 495px; /* Fixed height */
+    overflow-y: auto; /* Make it scrollable when content overflows */
+}
+
+.solution h2 {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.solution ol {
+    padding-left: 20px;
+    text-align: justify; /* Justify the list text */
+}
+
+.solution ol li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
