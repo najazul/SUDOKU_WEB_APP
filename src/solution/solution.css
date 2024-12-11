@@ -7,7 +7,7 @@
     margin: auto;
     font-family: Arial, sans-serif;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 490px; /* Fixed height */
+    height: 495px; /* Fixed height */
     overflow-y: auto; /* Make it scrollable when content overflows */
 }
 

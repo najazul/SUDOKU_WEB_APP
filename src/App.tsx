@@ -9,7 +9,7 @@
   import Leaderboard from "./leaderboard/leaderboard";
 
 function App() {
-  const [level, setLevel] = useState<number>(2);
+  const [level, setLevel] = useState<number>(1);
   const [trigger, reTrigger] = useState<number>(1);
   const [mistakes, setMistakes] = useState<number>(0);
   const [pause, setPause] = useState(false);
@@ -19,7 +19,7 @@ function App() {
   const [resetTime, setResetTime] = useState<boolean>(false);
   const [FinalLevel, setFinalLevel] = useState<string>("1");
   const [AddedPlayer, setAddedPlayer] = useState<number>(0);
-  
+  localStorage.clear()
   const changeLevel = (newLevel: number) => {
     if(!pause && mistakes < 3 && !solved){
       setLevel(newLevel);

@@ -216,7 +216,7 @@ import { addPlayerToFile } from "../leaderboard/createFiles";
     return subgridRow * 3 + subgridCol;
   };
 
-  const Texts = [`Sorry, ${username}:( Please try again`, 
+  const Texts = [`Sorry, ${username} :( Please try again`, 
                  `Congratulations, ${username}! You solved this puzzle in ${formatTime(finalTime)}!!` ]
 
   return (
@@ -231,13 +231,15 @@ import { addPlayerToFile } from "../leaderboard/createFiles";
         {mistakes === 3 ? <div className="Overlay-2">
           <div className="content">
             <p>{Texts[0]}</p>
-            <button className="retry" onClick={handleRetry}>Retry?</button>
+            <button className="retry" onClick={handleRetry}>
+              Retry?
+            </button>
           </div>
         </div>
         : null}
         {solved ? <div className = "Overlay-3">
+            <p>{Texts[1]}</p>
             <button className = "yey" onClick = {handleNewestGame}>
-                {Texts[1]}
                 New Game?
             </button>
         </div>
@@ -266,6 +268,7 @@ import { addPlayerToFile } from "../leaderboard/createFiles";
               return (
                 <input
                   disabled = {mistakes === 3 ? true : false}
+                  autoComplete="off"
                   draggable="false"
                   id={`cell-${rowIndex}-${colIndex}`}
                   key={`${rowIndex}-${colIndex}`}

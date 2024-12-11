@@ -195,7 +195,7 @@ body {
 }
 
 .retry:hover {
-  background-color: #0056b3;
+  background-color: #344861;
   color: white;
 }
 
@@ -213,13 +213,20 @@ body {
 }
 
 .yey {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border: none;
   border-radius: 50%;
   padding: 20px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 11; /* Ensures button is above the overlay */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.yey {
+  background-color: #344861;
+  color: white;
 }
