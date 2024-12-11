@@ -5,6 +5,8 @@
   import Timer from "./timer/timer";
   import Mistakes from "./mistakes/mistakes";
   import Username from "./username/username";
+  import Solution from "./solution/solution";
+  import Leaderboard from "./leaderboard/leaderboard";
 
 function App() {
   const [level, setLevel] = useState<number>(1);
@@ -29,26 +31,36 @@ function App() {
 
   return (
     <>
-      <div className = "first">
-        <Difficulties changeLevel ={changeLevel} pause = {pause} setResetTime={setResetTime} mistakes={mistakes} solved ={solved}/>
-        <Mistakes mistakes={mistakes}/>
-        <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime} resetTime = {resetTime} setResetTime={setResetTime} />
-        <Username username ={username} setUsername ={setUsername} />
+    <div className="main">
+      <div className="left">
+        <Solution />
       </div>
-      <div className = "Second">
-        <SudokuGrid 
-        level = {level} 
-        retriger = {trigger} 
-        pause = {pause}
-        setPause = {setPause}
-        mistakes = {mistakes}
-        setMistakes = {setMistakes}
-        solved = {solved}
-        setSolved = {setSolved}
-        finalTime = {finalTime}
+      <div className="center">
+        <div className = "first">
+         <Difficulties changeLevel ={changeLevel} pause = {pause} setResetTime={setResetTime} mistakes={mistakes} solved ={solved}/>
+         <Mistakes mistakes={mistakes}/>
+         <Timer mistakes={mistakes} solved = {solved} pause = {pause} FinalTime = {FinalTime} resetTime = {resetTime} setResetTime={setResetTime} />
+         <Username username ={username} setUsername ={setUsername} />
+        </div>
+        <div className = "Second">
+         <SudokuGrid 
+         level = {level} 
+         retriger = {trigger} 
+         pause = {pause}
+         setPause = {setPause}
+         mistakes = {mistakes}
+         setMistakes = {setMistakes}
+         solved = {solved}
+         setSolved = {setSolved}
+         finalTime = {finalTime}
         username = {username}
         />
+        </div>
       </div>
+      <div className="right">
+        <Leaderboard username={username} finalTime={finalTime} />
+      </div>
+    </div>
     </>
   )
 }

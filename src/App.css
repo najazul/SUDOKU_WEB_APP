@@ -1,13 +1,28 @@
-.first{
+.main{
     display: flex;
     flex-direction: row;
-    border: 1px dashed #aaa;    
+    justify-content: space-evenly;
+    width: 100vw;
+    gap: 1px;
+}
+
+.first{
+    display: flex;
+    flex-direction: row;   
 }
 .Second{
-    Display: flex;
+    display: flex;
     width: max-content;
-    border: 1px dashed #aaa;    
 } 
 
+.left {
+    width: 270px;
+    height: 490px;
+}
 
+.right {
+    width: 270px;
+    height: 490px;
+    border: 5px solid #535353;
+}
 
