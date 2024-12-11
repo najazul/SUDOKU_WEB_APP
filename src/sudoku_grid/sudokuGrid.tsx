@@ -7,6 +7,7 @@ import NewGameButton from "../NewGameButton/newgame";
 import { gridsAreEqual, solveSudoku } from "../sudoku_solver/sudoku_solver";
 import Numpad from "../numpad/numpad";
 import "./sudokuGrid.css";
+import { formatTime } from "../timer/timer";
 
   interface SudokuGridProps {
     level:number;
@@ -17,9 +18,12 @@ import "./sudokuGrid.css";
     setMistakes: React.Dispatch<React.SetStateAction<number>>;
     solved: boolean;
     setSolved: React.Dispatch<React.SetStateAction<boolean>>;
+    finalTime: number;
+    username: string;
   }
 
-  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, setMistakes, solved, setSolved}) => {
+  const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, 
+    setMistakes, solved, setSolved, finalTime, username}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
   const [grid, setGrid] = useState<string[][]>(Array.from({ length: 9 }, () => Array(9).fill("")));
   
@@ -199,6 +203,9 @@ import "./sudokuGrid.css";
     return subgridRow * 3 + subgridCol;
   };
 
+  const Texts = [`Sorry, ${username}:( Please try again`, 
+                 `Congratulations, ${username}! You solved this puzzle in ${formatTime(finalTime)}!!` ]
+
   return (
     <>
       <div className="sudoku-grid">
@@ -208,14 +215,16 @@ import "./sudokuGrid.css";
             </button>
         </div>
         : null}
-        {mistakes === 3 ? <div className = "Overlay-2">
-            <button className = "retry" onClick = {handleRetry}>
-                retry
-            </button>
+        {mistakes === 3 ? <div className="Overlay-2">
+          <div className="content">
+            <p>{Texts[0]}</p>
+            <button className="retry" onClick={handleRetry}>Retry?</button>
+          </div>
         </div>
         : null}
         {solved ? <div className = "Overlay-3">
             <button className = "yey" onClick = {handleNewestGame}>
+                {Texts[1]}
                 New Game?
             </button>
         </div>
