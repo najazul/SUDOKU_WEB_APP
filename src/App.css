@@ -8,7 +8,9 @@
 
 .first{
     display: flex;
-    flex-direction: row;   
+    flex-direction: row;
+    padding: 0px;
+    height: fit-content;
 }
 .Second{
     display: flex;
@@ -26,3 +28,7 @@
     border: 5px solid #535353;
 }
 
+.header{
+    font-family: Helvetica;
+    justify-items: center;
+}

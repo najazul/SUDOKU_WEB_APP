@@ -41,7 +41,7 @@ function Timer({ mistakes, solved, pause, FinalTime, resetTime, setResetTime}: T
 
   return (
     <div className="timer-container">
-      <div className="timer">Timer: {formatTime(time)}</div>
+      <div className="timer"><p className="text">Timer:</p><p className="time">{formatTime(time)}</p></div>
     </div>
   );
 }

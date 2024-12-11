@@ -2,6 +2,8 @@
     padding: 1px;
     width: 90px; 
     text-align: center;
+    gap: 5px;
+    justify-content: space-evenly;
   }
   
   .timer {
@@ -9,8 +11,28 @@
     color: #333;
     display: flex;
     align-items: center; 
-    justify-content: center;
-    height: 100%;
+    gap: 3px;
+    justify-content: space-evenly;
+    height: 50px;
     font-family: Arial, Arial, Helvetica, sans-serif;
+  }
+
+  .text{
+    font-size: 15px;
+    font-family: Helvetica;
+  }
+  
+  .time{
+    display: flex;
+    font-size: 15px;
+    font-weight: bold;
+    color: #344861;
+    font-family: Helvetica;
+    background-color: #ffffff;
+    width: 40px;
+    height: 25px;
+    border-radius: 10px;
+    justify-content: center; 
+    align-items: center; 
   }
   

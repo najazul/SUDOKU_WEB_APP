@@ -8,6 +8,7 @@ import { gridsAreEqual, solveSudoku } from "../sudoku_solver/sudoku_solver";
 import Numpad from "../numpad/numpad";
 import "./sudokuGrid.css";
 import { formatTime } from "../timer/timer";
+import { addPlayerToFile } from "../leaderboard/createFiles";
 
   interface SudokuGridProps {
     level:number;
@@ -20,10 +21,13 @@ import { formatTime } from "../timer/timer";
     setSolved: React.Dispatch<React.SetStateAction<boolean>>;
     finalTime: number;
     username: string;
+    setFinalLevel: React.Dispatch<React.SetStateAction<string>>;
+    setAddedPlayer: React.Dispatch<React.SetStateAction<number>>;
+    setResetTime: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
   const SudokuGrid: React.FC<SudokuGridProps> = ({level, retriger, pause, setPause, mistakes, 
-    setMistakes, solved, setSolved, finalTime, username}) => {
+    setMistakes, solved, setSolved, finalTime, username, setFinalLevel, setAddedPlayer, setResetTime}) => {
   // Initialize grid state as empty, will be updated once the API data is fetched
   const [grid, setGrid] = useState<string[][]>(Array.from({ length: 9 }, () => Array(9).fill("")));
   
@@ -101,6 +105,7 @@ import { formatTime } from "../timer/timer";
 
   const handleNewGame = () => {
     if(!pause && mistakes < 3 && !solved){
+      setResetTime(true);
       setNewGame(newGame + 1);
       setMistakes(0);
     }
@@ -146,7 +151,7 @@ import { formatTime } from "../timer/timer";
 
   const handleBlur = () => {
     setFocusedCell(null);
-  };
+  }
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -174,16 +179,20 @@ import { formatTime } from "../timer/timer";
       nextCell?.focus();
     };
 
+    // Add event listener to the grid container (optional: you can keep it on the document)
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [focusedCell]);
+  }, [focusedCell]); // Watch for changes to `focusedCell`
 
   useEffect(() => {
     if (gridsAreEqual(grid, solvedGrid) && grid.some(row => row.some(cell => cell != ""))) {
       setSolved(true);
+      addPlayerToFile(level.toString(), {name: username, time: finalTime.toString()});
+      setFinalLevel(level.toString());
+      setAddedPlayer(prev => prev + 1);
     }
   }, [grid, solvedGrid]);
 
@@ -192,8 +201,12 @@ import { formatTime } from "../timer/timer";
     setMistakes(0);
     setNewGame(newGame + 1);
   }
+
   const handleNumberClick = (number: string) => {
-    console.log(`Number clicked: ${number}`);
+    if(focusedCell){
+      const {row, col} = focusedCell;
+      handleInputChange(row,col,number);
+    };
   };
 
   // Helper function to get the subgrid index based on row and column
@@ -254,6 +267,7 @@ import { formatTime } from "../timer/timer";
                 <input
                   disabled = {mistakes === 3 ? true : false}
                   draggable="false"
+                  id={`cell-${rowIndex}-${colIndex}`}
                   key={`${rowIndex}-${colIndex}`}
                   type="text"
                   value={value}
@@ -262,7 +276,7 @@ import { formatTime } from "../timer/timer";
                   }
                   readOnly={isReadOnly}
                   onFocus={() => handleFocus(rowIndex, colIndex)}
-                  onBlur={handleBlur}
+                  onBlur = {handleBlur}
                   className={`sudoku-cell ${topBorder} ${leftBorder} ${isFocused} ${rowHighlight} ${colHighlight} ${subgridHighlight} ${Read} ${validity}`}
                 />
               );
