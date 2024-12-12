@@ -24,7 +24,7 @@ function Timer({ mistakes, solved, pause, FinalTime, resetTime, setResetTime}: T
     if (!solved && !pause && mistakes < 3 && !resetTime) {
       interval = setInterval(() => {
         setTime((prev) => prev + 1);
-      }, 10000);
+      }, 1000);
     } else if (mistakes === 3 || resetTime) {
       setTime(0);
       setResetTime(false);
